@@ -1,0 +1,8 @@
+{
+  "MangaDirectory": "C:\\Users\\YourName\\Documents\\Mangás",
+  "IsDarkMode": false,
+  "Language": "pt-BR",
+  "AutoScanOnStartup": true,
+  "ShowSplashScreen": true,
+  "ItemsPerPage": 20
+}

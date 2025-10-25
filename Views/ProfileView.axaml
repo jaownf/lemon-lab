@@ -1,0 +1,243 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:LemonLab.ViewModels"
+             xmlns:models="using:LemonLab.Models"
+             x:Class="LemonLab.Views.ProfileView"
+             x:DataType="vm:ProfileViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="24" Margin="0,0,0,24">
+            <!-- Cabeçalho do Perfil -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="32">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <!-- Avatar -->
+                    <Border Grid.Column="0" 
+                            Background="{DynamicResource AccentYellow}"
+                            Width="100" Height="100" 
+                            CornerRadius="50" Margin="0,0,24,0">
+                        <TextBlock Text="👤" FontSize="48" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    
+                    <!-- Info do Usuário -->
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="8">
+                        <StackPanel Orientation="Horizontal" Spacing="12" IsVisible="{Binding !IsEditingUsername}">
+                            <TextBlock Text="{Binding Profile.Username}" 
+                                       FontSize="28" FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                            <Button Content="✏️" Classes="icon-button" 
+                                    Command="{Binding EditUsernameCommand}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsEditingUsername}">
+                            <TextBox Text="{Binding TempUsername}" 
+                                     Width="200" Classes="search"/>
+                            <Button Content="✓" Classes="icon-button success" 
+                                    Command="{Binding SaveUsernameCommand}"/>
+                            <Button Content="✕" Classes="icon-button danger" 
+                                    Command="{Binding CancelEditCommand}"/>
+                        </StackPanel>
+                        
+                        <TextBlock Text="{Binding Profile.MemberSinceText, StringFormat='Membro desde {0}'}" 
+                                   FontSize="14" 
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                    </StackPanel>
+                    
+                    <!-- Botão Atualizar -->
+                    <Button Grid.Column="2" Content="🔄" 
+                            Classes="icon-button"
+                            Command="{Binding RefreshStatsCommand}"
+                            VerticalAlignment="Top"/>
+                </Grid>
+            </Border>
+
+            <!-- Estatísticas -->
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="16">
+                <!-- Total de Mangás -->
+                <Border Grid.Column="0" Background="{DynamicResource CardBackground}" 
+                        CornerRadius="12" Padding="20">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="📚" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Profile.TotalMangas}" 
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="{DynamicResource AccentYellow}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Total de Mangás" 
+                                   FontSize="13" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Mangás Lidos -->
+                <Border Grid.Column="1" Background="{DynamicResource CardBackground}" 
+                        CornerRadius="12" Padding="20">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="✅" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Profile.MangasRead}" 
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="#10B981"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Completos" 
+                                   FontSize="13" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Lendo -->
+                <Border Grid.Column="2" Background="{DynamicResource CardBackground}" 
+                        CornerRadius="12" Padding="20">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="📖" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Profile.MangasReading}" 
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="#3B82F6"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Lendo" 
+                                   FontSize="13" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Média de Notas -->
+                <Border Grid.Column="3" Background="{DynamicResource CardBackground}" 
+                        CornerRadius="12" Padding="20">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="⭐" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Profile.AverageRatingText}" 
+                                   FontSize="32" FontWeight="Bold"
+                                   Foreground="#F59E0B"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Média" 
+                                   FontSize="13" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Distribuição por Status -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="📊 Distribuição por Status" 
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12">
+                        <!-- Lendo -->
+                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Spacing="12">
+                            <Border Background="#10B981" Width="4" CornerRadius="2"/>
+                            <TextBlock Text="Lendo" VerticalAlignment="Center" 
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Grid.Row="0" 
+                                   Text="{Binding Profile.MangasReading}" 
+                                   FontWeight="Bold" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        
+                        <!-- Pausado -->
+                        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Spacing="12">
+                            <Border Background="#F59E0B" Width="4" CornerRadius="2"/>
+                            <TextBlock Text="Pausado" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Grid.Row="1" 
+                                   Text="{Binding Profile.MangasOnHold}" 
+                                   FontWeight="Bold" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        
+                        <!-- Abandonado -->
+                        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Spacing="12">
+                            <Border Background="#EF4444" Width="4" CornerRadius="2"/>
+                            <TextBlock Text="Abandonado" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Grid.Row="2" 
+                                   Text="{Binding Profile.MangasDropped}" 
+                                   FontWeight="Bold" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        
+                        <!-- Planejar Ler -->
+                        <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" Spacing="12">
+                            <Border Background="#6B7280" Width="4" CornerRadius="2"/>
+                            <TextBlock Text="Planejar Ler" VerticalAlignment="Center"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1" Grid.Row="3" 
+                                   Text="{Binding Profile.MangasPlanToRead}" 
+                                   FontWeight="Bold" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Top 5 Mangás -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="🏆 Top 5 Melhores Mangás" 
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    
+                    <ItemsControl ItemsSource="{Binding TopMangas}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Manga">
+                                <Border Background="{DynamicResource HoverBackground}" 
+                                        CornerRadius="8" Padding="16" Margin="0,0,0,8">
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                        <Border Grid.Column="0" 
+                                                Background="{DynamicResource AccentYellow}"
+                                                Width="50" Height="70" 
+                                                CornerRadius="6" Margin="0,0,16,0">
+                                            <TextBlock Text="📖" FontSize="24" 
+                                                       HorizontalAlignment="Center" 
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                        
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Title}" 
+                                                       FontSize="15" FontWeight="SemiBold"
+                                                       Foreground="{DynamicResource TextPrimary}"/>
+                                            <TextBlock Text="{Binding Author}" 
+                                                       FontSize="13" 
+                                                       Foreground="{DynamicResource TextSecondary}"
+                                                       Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        
+                                        <Border Grid.Column="2" 
+                                                Background="#FEF3C7" 
+                                                CornerRadius="6" Padding="12,6"
+                                                VerticalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                <TextBlock Text="⭐" FontSize="14"/>
+                                                <TextBlock Text="{Binding RatingText}" 
+                                                           FontSize="14" FontWeight="Bold"
+                                                           Foreground="#92400E"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                    <!-- Estado vazio -->
+                    <StackPanel Spacing="8" IsVisible="{Binding !TopMangas.Count}"
+                                HorizontalAlignment="Center" Margin="0,20">
+                        <TextBlock Text="Nenhum mangá avaliado ainda" 
+                                   FontSize="14" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

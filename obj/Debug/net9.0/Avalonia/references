@@ -25,6 +25,7 @@ C:\Users\JP\.nuget\packages\avalonia.x11\11.3.6\lib\net8.0\Avalonia.X11.dll
 C:\Users\JP\.nuget\packages\harfbuzzsharp\8.3.1.1\lib\net8.0\HarfBuzzSharp.dll
 C:\Users\JP\.nuget\packages\microcom.runtime\0.11.0\lib\net5.0\MicroCom.Runtime.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\Microsoft.CSharp.dll
+C:\Users\JP\.nuget\packages\microsoft.data.sqlite.core\9.0.0\lib\net8.0\Microsoft.Data.Sqlite.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\Microsoft.VisualBasic.Core.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\Microsoft.VisualBasic.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\Microsoft.Win32.Primitives.dll
@@ -32,6 +33,9 @@ C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\Micros
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\mscorlib.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\netstandard.dll
 C:\Users\JP\.nuget\packages\skiasharp\2.88.9\lib\net6.0\SkiaSharp.dll
+C:\Users\JP\.nuget\packages\sqlitepclraw.bundle_e_sqlite3\2.1.10\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll
+C:\Users\JP\.nuget\packages\sqlitepclraw.core\2.1.10\lib\netstandard2.0\SQLitePCLRaw.core.dll
+C:\Users\JP\.nuget\packages\sqlitepclraw.provider.e_sqlite3\2.1.10\lib\net6.0\SQLitePCLRaw.provider.e_sqlite3.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\System.AppContext.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\System.Buffers.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.10\ref\net9.0\System.Collections.Concurrent.dll

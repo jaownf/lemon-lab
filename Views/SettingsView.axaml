@@ -1,0 +1,194 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:LemonLab.ViewModels"
+             x:Class="LemonLab.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+    <ScrollViewer>
+        <StackPanel Spacing="24" Margin="0,0,0,24">
+            <!-- Cabeçalho -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="⚙️ Configurações" 
+                           FontSize="28" FontWeight="Bold"
+                           Foreground="{DynamicResource TextPrimary}"/>
+                <TextBlock Text="Personalize sua experiência no LemonLab" 
+                           FontSize="14" 
+                           Foreground="{DynamicResource TextSecondary}"/>
+            </StackPanel>
+
+            <!-- Aparência -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="20">
+                    <TextBlock Text="🎨 Aparência" 
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    
+                    <Grid ColumnDefinitions="*,Auto" RowSpacing="16">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Tema Escuro" 
+                                       FontSize="15" FontWeight="Medium"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Ative o modo escuro para reduzir o cansaço visual" 
+                                       FontSize="13" 
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1" 
+                                      IsChecked="{Binding Settings.IsDarkMode}"
+                                      VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Biblioteca -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="20">
+                    <TextBlock Text="📚 Biblioteca" 
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Diretório dos Mangás" 
+                                   FontSize="15" FontWeight="Medium"
+                                   Foreground="{DynamicResource TextPrimary}"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Grid.Column="0" 
+                                     Text="{Binding Settings.MangaDirectory}"
+                                     Watermark="Selecione o diretório dos seus mangás..."
+                                     Classes="search" Margin="0,0,12,0"/>
+                            <Button Grid.Column="1" Content="📁 Procurar" 
+                                    Classes="secondary"/>
+                        </Grid>
+                    </StackPanel>
+                    
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Escanear ao Iniciar" 
+                                       FontSize="15" FontWeight="Medium"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Escaneia automaticamente novos mangás ao abrir o app" 
+                                       FontSize="13" 
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1" 
+                                      IsChecked="{Binding Settings.AutoScanOnStartup}"
+                                      VerticalAlignment="Center"/>
+                    </Grid>
+                    
+                    <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Mostrar Splash Screen" 
+                                       FontSize="15" FontWeight="Medium"
+                                       Foreground="{DynamicResource TextPrimary}"/>
+                            <TextBlock Text="Exibe a tela de boas-vindas ao iniciar" 
+                                       FontSize="13" 
+                                       Foreground="{DynamicResource TextSecondary}"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1" 
+                                      IsChecked="{Binding Settings.ShowSplashScreen}"
+                                      VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Dados -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="20">
+                    <TextBlock Text="💾 Gerenciar Dados" 
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Button Grid.Column="0" Content="📤 Exportar Dados" 
+                                Classes="secondary"
+                                Command="{Binding ExportDataCommand}"
+                                HorizontalAlignment="Stretch"/>
+                        <Button Grid.Column="1" Content="📥 Importar Dados" 
+                                Classes="secondary"
+                                HorizontalAlignment="Stretch"/>
+                    </Grid>
+                    
+                    <Separator Background="{DynamicResource BorderBrush}"/>
+                    
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="⚠️ Zona de Perigo" 
+                                   FontSize="15" FontWeight="SemiBold"
+                                   Foreground="#EF4444"/>
+                        
+                        <Button Content="🗑️ Resetar Banco de Dados" 
+                                Classes="danger"
+                                Command="{Binding ResetDatabaseCommand}"
+                                HorizontalAlignment="Left"/>
+                        <TextBlock Text="Remove todos os mangás e estatísticas. Esta ação não pode ser desfeita!" 
+                                   FontSize="12" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   TextWrapping="Wrap"/>
+                        
+                        <Button Content="↺ Resetar Configurações" 
+                                Classes="danger"
+                                Command="{Binding ResetSettingsCommand}"
+                                HorizontalAlignment="Left"
+                                Margin="0,8,0,0"/>
+                        <TextBlock Text="Restaura todas as configurações para os valores padrão" 
+                                   FontSize="12" 
+                                   Foreground="{DynamicResource TextSecondary}"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Sobre -->
+            <Border Background="{DynamicResource CardBackground}" 
+                    CornerRadius="12" Padding="24">
+                <StackPanel Spacing="16">
+                    <TextBlock Text="ℹ️ Sobre o LemonLab" 
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimary}"/>
+                    
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="Versão 1.0.0" 
+                                   FontSize="14" 
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                        <TextBlock Text="Gerenciador de biblioteca de mangás local" 
+                                   FontSize="14" 
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                        <TextBlock Text="Desenvolvido com ❤️ usando Avalonia UI" 
+                                   FontSize="14" 
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,8,0,0">
+                        <TextBlock Text="🍋" FontSize="24"/>
+                        <TextBlock Text="LemonLab" 
+                                   FontSize="20" FontWeight="Bold"
+                                   Foreground="{DynamicResource AccentYellow}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Status Message -->
+            <Border Background="{DynamicResource AccentYellow}" 
+                    CornerRadius="8" Padding="16"
+                    IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                <TextBlock Text="{Binding StatusMessage}" 
+                           FontSize="14" FontWeight="Medium"
+                           Foreground="#1F2937"
+                           TextWrapping="Wrap"/>
+            </Border>
+
+            <!-- Botão Salvar -->
+            <Button Content="💾 Salvar Configurações" 
+                    Classes="primary"
+                    Command="{Binding SaveSettingsCommand}"
+                    HorizontalAlignment="Center"
+                    Padding="32,12"/>
+        </StackPanel>
+    </ScrollViewer>
+
+</UserControl>

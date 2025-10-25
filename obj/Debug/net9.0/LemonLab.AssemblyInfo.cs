@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LemonLab")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a45cb50bd32e1df9ee38c6113ca1e9d5df30cc91")]
 [assembly: System.Reflection.AssemblyProductAttribute("LemonLab")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LemonLab")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

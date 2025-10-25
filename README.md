@@ -1,6 +1,6 @@
 # LemonLab 🍋 - Manga Library Manager
 
-A modern, beautiful manga library indexer built with .NET and Avalonia UI, inspired by Tachiyomi, Hydra, and PSPP.
+Um gerenciador moderno e completo de biblioteca de mangás local, desenvolvido com .NET 9, Avalonia UI, SQLite, Python e outras tecnologias. Inspirado em Tachiyomi, AniList e MyAnimeList.
 
 ## Features
 
