@@ -1,0 +1,413 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:LemonLab"
+        x:Class="LemonLab.MainWindow"
+        Width="1200" Height="800"
+        MinWidth="900" MinHeight="600"
+        Title="LemonLab - Manga Library"
+        Background="#F5F5F5"
+        TransparencyLevelHint="AcrylicBlur"
+        x:DataType="local:MainViewModel">
+
+    <Window.Styles>
+        <!-- Card Style -->
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BoxShadow" Value="0 2 8 0 #15000000"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        
+        <!-- Search Box Style -->
+        <Style Selector="TextBox.search">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        
+        <!-- Button Style -->
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="#6366F1"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        
+        <Style Selector="Button.primary:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#4F46E5"/>
+        </Style>
+        
+        <!-- ListBox Item Style -->
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+        
+        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#6366F1" Padding="24,20">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <!-- Logo and Title -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12">
+                    <Border Background="#FBBF24" 
+                            Width="40" Height="40" 
+                            CornerRadius="10">
+                        <TextBlock Text="🍋" 
+                                   FontSize="24" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="LemonLab" 
+                                   FontSize="22" 
+                                   FontWeight="Bold" 
+                                   Foreground="White"/>
+                        <TextBlock Text="Manga Library Manager" 
+                                   FontSize="12" 
+                                   Foreground="#E0E7FF"/>
+                    </StackPanel>
+                </StackPanel>
+                
+                <!-- Search Bar -->
+                <TextBox Grid.Column="1" 
+                         Classes="search"
+                         Watermark="Search manga by title, author, or genre..."
+                         Text="{Binding SearchText}"
+                         Margin="40,0"
+                         VerticalAlignment="Center"/>
+                
+                <!-- Action Buttons -->
+                <StackPanel Grid.Column="2" 
+                            Orientation="Horizontal" 
+                            Spacing="12" 
+                            VerticalAlignment="Center">
+                    <Button Classes="primary" Content="+ Add Manga"/>
+                    <Button Classes="primary" Content="⚙ Settings"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" ColumnDefinitions="350,*" Margin="24">
+            <!-- Left Panel - Manga List -->
+            <Border Grid.Column="0" Classes="card" Margin="0,0,12,0">
+                <Grid RowDefinitions="Auto,*,Auto">
+                    <!-- List Header -->
+                    <Border Grid.Row="0" 
+                            Background="#F8F9FA" 
+                            Padding="20,16"
+                            CornerRadius="12,12,0,0">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBlock Grid.Column="0" 
+                                       Text="My Library" 
+                                       FontSize="16" 
+                                       FontWeight="SemiBold"
+                                       Foreground="#1F2937"/>
+                            <Border Grid.Column="1" 
+                                    Background="#6366F1" 
+                                    CornerRadius="12" 
+                                    Padding="8,4">
+                                <TextBlock Text="{Binding Mangas.Count}" 
+                                           Foreground="White" 
+                                           FontSize="12" 
+                                           FontWeight="Bold"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Manga List -->
+                    <ScrollViewer Grid.Row="1" Padding="12">
+                        <ListBox ItemsSource="{Binding Mangas}"
+                                 SelectedItem="{Binding SelectedManga}"
+                                 Background="Transparent"
+                                 BorderThickness="0">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:MangaItem">
+                                    <Border Background="White"
+                                            BorderBrush="#E5E7EB"
+                                            BorderThickness="1"
+                                            CornerRadius="8"
+                                            Padding="12"
+                                            Cursor="Hand">
+                                        <Grid ColumnDefinitions="50,*">
+                                            <!-- Cover Placeholder -->
+                                            <Border Grid.Column="0" 
+                                                    Background="{Binding CoverColor}"
+                                                    Width="50" 
+                                                    Height="70" 
+                                                    CornerRadius="6"
+                                                    Margin="0,0,12,0">
+                                                <TextBlock Text="📖" 
+                                                           FontSize="24" 
+                                                           HorizontalAlignment="Center" 
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+                                            
+                                            <!-- Manga Info -->
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Title}" 
+                                                           FontSize="14" 
+                                                           FontWeight="SemiBold"
+                                                           Foreground="#111827"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Text="{Binding Author}" 
+                                                           FontSize="12" 
+                                                           Foreground="#6B7280"
+                                                           Margin="0,2,0,0"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <StackPanel Orientation="Horizontal" 
+                                                            Spacing="8" 
+                                                            Margin="0,4,0,0">
+                                                    <Border Background="#DBEAFE" 
+                                                            CornerRadius="4" 
+                                                            Padding="6,2">
+                                                        <TextBlock Text="{Binding Status}" 
+                                                                   FontSize="10" 
+                                                                   Foreground="#1E40AF"
+                                                                   FontWeight="Medium"/>
+                                                    </Border>
+                                                    <TextBlock Text="{Binding Chapters, StringFormat='Ch. {0}'}" 
+                                                               FontSize="11" 
+                                                               Foreground="#9CA3AF"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+                    
+                    <!-- Footer Stats -->
+                    <Border Grid.Row="2" 
+                            Background="#F8F9FA" 
+                            Padding="20,12"
+                            CornerRadius="0,0,12,12"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="0,1,0,0">
+                        <TextBlock Text="📚 Keep reading!" 
+                                   FontSize="12" 
+                                   Foreground="#6B7280"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Right Panel - Details -->
+            <Border Grid.Column="1" Classes="card" Margin="12,0,0,0">
+                <ScrollViewer>
+                    <StackPanel Margin="32" Spacing="24">
+                        <!-- Selected Manga Details -->
+                        <StackPanel IsVisible="{Binding SelectedManga, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <!-- Cover and Title -->
+                            <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,24">
+                                <Border Grid.Column="0" 
+                                        Background="{Binding SelectedManga.CoverColor}"
+                                        Width="180" 
+                                        Height="260" 
+                                        CornerRadius="12"
+                                        Margin="0,0,24,0"
+                                        BoxShadow="0 4 12 0 #20000000">
+                                    <TextBlock Text="📖" 
+                                               FontSize="72" 
+                                               HorizontalAlignment="Center" 
+                                               VerticalAlignment="Center"/>
+                                </Border>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="12">
+                                    <TextBlock Text="{Binding SelectedManga.Title}" 
+                                               FontSize="32" 
+                                               FontWeight="Bold"
+                                               Foreground="#111827"
+                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding SelectedManga.Author, StringFormat='by {0}'}" 
+                                               FontSize="18" 
+                                               Foreground="#6B7280"/>
+                                    
+                                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,8,0,0">
+                                        <Border Background="#FEF3C7" 
+                                                CornerRadius="6" 
+                                                Padding="12,6">
+                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                <TextBlock Text="⭐" FontSize="14"/>
+                                                <TextBlock Text="{Binding SelectedManga.Rating, StringFormat='{}{0:F1}'}" 
+                                                           FontSize="14" 
+                                                           FontWeight="Bold"
+                                                           Foreground="#92400E"/>
+                                            </StackPanel>
+                                        </Border>
+                                        
+                                        <Border Background="#DBEAFE" 
+                                                CornerRadius="6" 
+                                                Padding="12,6">
+                                            <TextBlock Text="{Binding SelectedManga.Status}" 
+                                                       FontSize="14" 
+                                                       FontWeight="SemiBold"
+                                                       Foreground="#1E40AF"/>
+                                        </Border>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,16,0,0">
+                                        <Button Classes="primary" Content="📖 Read Now" Width="140"/>
+                                        <Button Classes="primary" Content="⬇ Download" Width="140"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            
+                            <!-- Info Cards -->
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+                                <Border Grid.Column="0" 
+                                        Background="#F0F9FF" 
+                                        CornerRadius="8" 
+                                        Padding="16">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Chapters" 
+                                                   FontSize="12" 
+                                                   Foreground="#0369A1"
+                                                   FontWeight="Medium"/>
+                                        <TextBlock Text="{Binding SelectedManga.Chapters}" 
+                                                   FontSize="24" 
+                                                   FontWeight="Bold"
+                                                   Foreground="#0C4A6E"/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <Border Grid.Column="1" 
+                                        Background="#F0FDF4" 
+                                        CornerRadius="8" 
+                                        Padding="16">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Status" 
+                                                   FontSize="12" 
+                                                   Foreground="#15803D"
+                                                   FontWeight="Medium"/>
+                                        <TextBlock Text="{Binding SelectedManga.Status}" 
+                                                   FontSize="18" 
+                                                   FontWeight="Bold"
+                                                   Foreground="#14532D"/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <Border Grid.Column="2" 
+                                        Background="#FEF3C7" 
+                                        CornerRadius="8" 
+                                        Padding="16">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock Text="Rating" 
+                                                   FontSize="12" 
+                                                   Foreground="#A16207"
+                                                   FontWeight="Medium"/>
+                                        <TextBlock Text="{Binding SelectedManga.Rating, StringFormat='{}{0:F1}/10'}" 
+                                                   FontSize="18" 
+                                                   FontWeight="Bold"
+                                                   Foreground="#713F12"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            
+                            <!-- Genre Section -->
+                            <StackPanel Spacing="12">
+                                <TextBlock Text="Genres" 
+                                           FontSize="16" 
+                                           FontWeight="SemiBold"
+                                           Foreground="#111827"/>
+                                <TextBlock Text="{Binding SelectedManga.Genre}" 
+                                           FontSize="14" 
+                                           Foreground="#6B7280"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
+                            <!-- Chapters Section -->
+                            <StackPanel Spacing="12">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <TextBlock Grid.Column="0" 
+                                               Text="Recent Chapters" 
+                                               FontSize="16" 
+                                               FontWeight="SemiBold"
+                                               Foreground="#111827"/>
+                                    <Button Grid.Column="1" 
+                                            Content="View All →" 
+                                            Background="Transparent"
+                                            Foreground="#6366F1"
+                                            BorderThickness="0"
+                                            Cursor="Hand"/>
+                                </Grid>
+                                
+                                <!-- Sample Chapters -->
+                                <StackPanel Spacing="8">
+                                    <Border Background="#F9FAFB" 
+                                            BorderBrush="#E5E7EB"
+                                            BorderThickness="1"
+                                            CornerRadius="8" 
+                                            Padding="16,12"
+                                            Cursor="Hand">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" 
+                                                       Text="Chapter 1 - The Beginning" 
+                                                       FontSize="14"
+                                                       Foreground="#111827"/>
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="2 days ago" 
+                                                       FontSize="12"
+                                                       Foreground="#9CA3AF"/>
+                                        </Grid>
+                                    </Border>
+                                    
+                                    <Border Background="#F9FAFB" 
+                                            BorderBrush="#E5E7EB"
+                                            BorderThickness="1"
+                                            CornerRadius="8" 
+                                            Padding="16,12"
+                                            Cursor="Hand">
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <TextBlock Grid.Column="0" 
+                                                       Text="Chapter 2 - New Horizons" 
+                                                       FontSize="14"
+                                                       Foreground="#111827"/>
+                                            <TextBlock Grid.Column="1" 
+                                                       Text="1 week ago" 
+                                                       FontSize="12"
+                                                       Foreground="#9CA3AF"/>
+                                        </Grid>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <!-- Empty State -->
+                        <StackPanel IsVisible="{Binding SelectedManga, Converter={x:Static ObjectConverters.IsNull}}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Spacing="16"
+                                    Margin="0,100,0,0">
+                            <TextBlock Text="📚" 
+                                       FontSize="72" 
+                                       HorizontalAlignment="Center"
+                                       Opacity="0.3"/>
+                            <TextBlock Text="Select a manga to view details" 
+                                       FontSize="18" 
+                                       Foreground="#9CA3AF"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Choose from your library on the left" 
+                                       FontSize="14" 
+                                       Foreground="#D1D5DB"
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+
+</Window>
