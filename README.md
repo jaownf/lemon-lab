@@ -101,12 +101,6 @@ LemonLab/
 
 Personal use project.
 
-## Credits
-
-Inspired by:
-- **Tachiyomi** - Popular Android manga reader
-- **Hydra** - Game launcher
-- **PSPP** - Statistical analysis software
 
 ---
 
