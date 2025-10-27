@@ -1,22 +1,22 @@
-# LemonLab 🍋 - Manga Library Manager
+# LemonLab - Manga Library Manager
 
 Um gerenciador moderno e completo de biblioteca de mangás local, desenvolvido com .NET 9, Avalonia UI, SQLite, Python e outras tecnologias. Inspirado em Tachiyomi, AniList e MyAnimeList.
 
 ## Features
 
-✨ **Modern UI Design**
+ **Modern UI Design**
 - Clean, intuitive interface with card-based layout
 - Two-panel design: Library list + Detailed view
 - Responsive and smooth animations
 - Beautiful color scheme with Indigo accent
 
-📚 **Manga Management**
+ **Manga Management**
 - Browse your manga collection
 - View detailed information (title, author, chapters, status, rating, genres)
 - Search functionality (by title, author, or genre)
 - Visual manga cards with color-coded covers
 
-🎨 **UI Highlights**
+ **UI Highlights**
 - Professional header with logo and search bar
 - Manga cards with cover placeholders
 - Status badges (Ongoing, Completed, Hiatus)
