@@ -87,13 +87,11 @@ LemonLab/
 
 ## Future Enhancements
 
-- [ ] Real manga indexing from file system
 - [ ] Database integration (SQLite)
 - [ ] Cover image support
 - [ ] Chapter reading functionality
 - [ ] Download manager
 - [ ] Filters and sorting options
-- [ ] Dark theme support
 - [ ] Settings panel
 - [ ] Import/Export library
 
